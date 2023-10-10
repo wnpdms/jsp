@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="co.yedam.prjdb.book.service.BookMapper">
+<mapper namespace="co.yedam.prjdb.book.map.BookMapper">
 <select id="bookSelectList" resultType="co.yedam.prjdb.book.service.BookVO">
 SELECT * FROM BOOK
+ORDER BY BOOK_ID
 </select>
 
 <insert id="bookInsert" parameterType="co.yedam.prjdb.book.service.BookVO">
-INSERT INTO BOOK(book_code, book_name, book_writer, book_pub, book_price)
-VALUES (#{bookCode}, #{bookName}, #{bookWriter}, #{bookPub}, #{bookPrice})
+<selectKey keyProperty="bookId" resultType="int" order="BEFORE">
+	SELECT NVL(MAX(book_Id), 0) + 1 AS bookId FROM BOOK
+</selectKey>
+INSERT INTO BOOK
+VALUES (#{bookCode}, #{bookName}, #{bookWriter}, #{bookPub}, #{bookPrice}, #{bookId})
 </insert>
 
 <update id="bookUpdate" parameterType="co.yedam.prjdb.book.service.BookVO">
+	UPDATE BOOK
+	<set>
+		<if test="book != null">BOOK_ID = #{bookId},</if>
+		<if test="bookName != null">BOOK_NANE = #{bookName},</if>
+		<if test="bookWriter != null">BOOK_WRITER = #{bookWriter},</if>
+		<if test="bookPub != null">BOOK_PUB = #{bookPub},</if>
+		<if test="bookPrice != null">BOOK_PRICE = #{bookPrice},</if>
+	</set>
 </update>
 
 <delete id="bookDelete" parameterType="co.yedam.prjdb.book.service.BookVO">
+	DELETE FROM BOOK
+	WHERE BOOK_ID = #{bookId}
+	<choose>
+	<when test="code_list.size != 0">
+                AND BOOK_CODE IN 
+                <foreach collection="code_list" item="item" index="index" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </when>
+        </choose>
 </delete>
 </mapper>

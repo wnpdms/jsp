@@ -1,9 +1,6 @@
 package co.yedam.prjdb.book.web;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,35 +8,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import co.yedam.prjdb.book.service.BookService;
 import co.yedam.prjdb.book.service.BookVO;
 import co.yedam.prjdb.book.serviceImpl.BookServiceImpl;
 
-@WebServlet("/ajaxbooklist.do")
-public class AjaxBookList extends HttpServlet {
+@WebServlet("/ajaxbookdelete.do")
+public class AjaxBookDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AjaxBookList() {
+    public AjaxBookDelete() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BookService service = new BookServiceImpl();
-		List<BookVO> list = service.bookSelectList();
+		BookService dao = new BookServiceImpl();
+		BookVO vo = new BookVO();
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("data", list);
+		int bookId = Integer.valueOf(request.getParameter("bid"));
+		vo.setBookId(bookId);
 		
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json = objectMapper.writeValueAsString(list);
+		int n = dao.bookDelete(vo);
 		
-		response.setContentType("text/json; charset=UTF-8");
-		response.getWriter().print(json);
+		if(n != 0) {
+			response.getWriter().print("{\"retCode\" : \"Success\"}");
+		} else {
+			response.getWriter().print("{\"retCode\" : \"Fail\"}");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }
