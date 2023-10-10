@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax.html</title>
+<script>
+   let json = `[{"name":"홍길동", "age":20},{"name":"김길동", "age":22}]`;
+  // json 포맷의 문자 => 자바스크립트의 객체. JSON.parse()
+  // 자바스크립트의 객체 => json 포맷의 문자. JSON.stringify()
+   let obj = JSON.parse(json); //문자열을 객체로
+   //console.log(obj);
+
+   let str = JSON.stringify(obj); //객체를 문자열로 
+  // console.log(str);
+</script>
+</head>
+<body>
+  <h3>Asynchronous Javascript And Xml</h3>
+  <ul id="list">
+    <li>first + last</li>
+  </ul>
+  <script>
+    //Ajax 처리 객체 : XMLHttpRequest xml데이터나 json 데이터를 가져옴
+    let ajx = new XMLHttpRequest();
+    // ajx.open('get', './dataset.xml'); //eXtensible Markup Language.
+    ajx.open('get', '../AjaxReplyList.do?nid=1'); //nid 파라메터 값도 넘겨줘야함
+    ajx.send();
+    ajx.onload = getReply; // callback 함수 load이벤트가 발생하면 실행하겠다
+     
+     function getReply(){
+		 //console.log(ajx.responseText);
+		// console.log(ajx);
+		// let data = JSON.parse(ajx.responseText);
+		// console.log(data);
+	 }
+      //console.log(ajx.responseText); // responseText 텍스트를 그대로 가져옴
+      //document.querySelector('body').innerHTML=ajx.responseText;
+    
+    function getJson(){
+      console.log(ajx.responseText);
+      let data = JSON.parse(ajx.responseText); // 문자를자바스크립트의 객체 로 변경(배열형식)
+      console.log(data);
+      //code here
+      for(let i=0; i<data.length; i++){
+        let li = document.createElement('li');
+        li.innerText = data[i].first_name+", "+data[i].last_name;
+        document.getElementById('list').appendChild(li);
+      }
+    }
+
+
+    function genXML(){
+      console.log(ajx.responseXML);
+      let xml = ajx.responseXML;
+      let records= xml.getElementsByTagName('record'); //이렇게 하면 배열처럼 값을 가져올수있음
+      // console.log(ids[0].textContent);
+      // console.log(ids[0].innerHTMLs);
+      for(let i=0; i<records.length; i++){
+        let li = document.createElement('li');
+        li.innerText= records[i].children[1].innerHTML+" , " +records[i].children[2].innerHTML;
+        document.getElementById('list').appendChild(li);
+      }
+    }
+
+      
+  </script>
+</body>
+</html>

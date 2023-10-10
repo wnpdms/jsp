@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.outer{
+  width: 420px;
+  height: 350px;
+  background-color: yellow;
+
+}
+.outer span{
+  display: inline-block;
+  width: 90px;
+  height: 25px;
+  padding: 2px;
+  margin: 2px;
+  border: 1px solid black;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+  <input type="text" class="userVal">
+  <button id="addBtn">입력</button>
+  <div class="outer">
+    <span>hello</span>
+  </div>
+  남은시간: <span class="timer">60</span>초.
+  <script>
+    let str = `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id accusantium minima eos sit ullam. Ipsum tempora velit at harum repudiandae vel molestiae perferendis? Neque commodi, fugit quas nesciunt non corporis!
+`;
+    let wordAry = str.split(' '); //공백을 기준으로 잘라서 넣어줌
+    console.log(wordAry);
+
+    for (let i = 0; i < wordAry.length; i++) {
+          if (wordAry.indexOf(wordAry[i]) == -1) {
+            wordAry.push(wordAry[i]);
+          }
+          console.log(wordAry[i]);
+        }
+
+        for (let i = 0; i < wordAry.length; i++) { // option에 시도 넣기
+          let span = document.createElement('span');
+          span.innerText = wordAry[i];
+          //console.log(sidos[i]);
+          document.querySelector('.outer').appendChild(span);
+        }
+
+      
+      // let btn = '#addBtn';
+      // for(let i=0; i<wordAry.length; i++){
+      //   if(wordAry[i]==this.value){
+      //     btn.addEventListener('click', function(e){
+      //     e.outer.span.remove();
+      //   })
+      // }
+      // }  //내가짠거
+
+      ////////////////////////////////////////////////////////////
+      let timeLeft=60;
+      setInterval(function(){
+        document.querySelector('.timer').innerHTML = timeLeft--;
+      if(timeLeft<0){
+        clearInterval(interval);//작업종료
+        alert('실패');
+      }
+       },1000);
+
+       //입력이벤트
+       document.querySelector('input.userVal').addEventListener('change', function(e){
+        let userVal = this.value;
+        document.querySelectorAll('.outer span').forEach(span => {
+          if(span.innerText==userVal)
+           span.remove();
+        })
+        //입력값초기화
+        this.value='';
+
+        //
+        if(document.querySelectorAll('.outer span').length==0){
+          if(timeLeft>0){
+            alert('성공');
+          }
+        }
+       })
+
+
+  </script>
+</body>
+</html>

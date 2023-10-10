@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yedam.prjdb.notice.map.ReplyMapper">
+<select id="list" resultType="co.yedam.prjdb.notice.service.ReplyVO">
+	SELECT * FROM TBL_REPLY
+	WHERE NOTICE_ID = #{notice_id}	
+</select>
+
+<select id="select" resultType="co.yedam.prjdb.notice.service.ReplyVO">
+	SELECT * FROM TBL_REPLY WHERE REPLY_ID = #{replyId}
+</select>
+
+<insert id="insert">
+	<selectKey keyProperty="replyId,replyDate" resultType="co.yedam.prjdb.notice.service.ReplyVO" order="BEFORE">
+	 select seq_reply.nextval as replyId, sysdate as replyDate from dual
+	</selectKey>
+	
+	INSERT INTO TBL_REPLY(REPLY_ID, NOTICE_ID, REPLYER, REPLY)
+	VALUES(#{replyId}, #{noticeId}, #{replyer}, #{reply})
+</insert>
+
+<update id="update">
+	update tbl_reply set reply=#{reply}, update_date=sysdate
+	where reply_id = #{replyId}
+	</update>
+	
+<delete id="delete">
+delete from tbl_reply
+where reply_id = #{replyId}
+</delete>
+
+
+</mapper>

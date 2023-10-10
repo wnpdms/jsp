@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>jqueryCss.html</title>
+
+  <style>
+    #show>ul>li:nth-child(1) {
+      color: red;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="show">
+    <ul>
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Cherry<span>추천</span></li>
+      <li></li>
+    </ul>
+  </div>
+  <input type="checkbox" name="hobby" value="reading" checked>
+  <input type="checkbox" name="hobby" value="eating">
+
+
+  <script>
+    $('#show>ul>li:nth-child(1)').css('background', 'yellow'); //css선택자를 이용한 요소들 선택, css속성 적용할때 .css
+    $('#show>ul>li:nth-child(2)').css('background', 'aqua'); //.css 스타일을 지정하는 함수
+    $('li').on('click', function (e) { //on 이벤트걸때    , li요소 전부에 이벤트 걸겠다
+      console.log(this);
+      $(this).css('color', 'blue');
+    })
+
+    //eq, lt, gt에 오는 순번은 index의 값이 0부터 시작.
+    $('li:eq(0)').css('border', '2px solid green'); // 선택한 요소 중에서 인덱스가 n인 요소를 선택함.(여기서 Apple)
+    $('li:gt(1)').css('fontSize', '28px'); //선택한 요소 중에서 인덱스가 n보다 큰 요소를 모두 선택함. (여기선 Cherry 선택)
+    $('li:lt(1)').css('fontSize', '28px'); //선택한 요소 중에서 인덱스가 n보다 작은 요소를 모두 선택함.(여기선 Apple 선택)
+    $('li:contains(Banana)').css('fontSize', '30px');//contains(text)이 텍스트값을 가지고있는 요소를 선택하겠다.
+    $('li:has(span)').css('background', 'green'); //선택한 요소 중에서 지정한 선택자와 일치하는 자손 요소를 갖는 요소를 모두 선택함.
+    $('li:not(:eq(1))').css('border', '3px dotted blue'); //선택한 요소 중에서 지정한 선택자와 일치하지 않는 요소를 모두 선택함.
+    $('li:empty').text('No'); //text -> innerText속성, 비어있는 li에 No라는 값을 담겠습니다.
+
+    //input태그의 checked된 요소를 가져오겠다
+    console.log($('input:checked'));
+
+    // $('ul').append($('<li />').text('Melon')); //<li>Melon</li> 마지막'에 새로운 요소나 콘텐츠를 추가합니다
+    $('ul').prepend($('<li />').text('Melon')); //'처음'에 새로운 요소나 콘텐츠를 추가
+    // $('<li />').text('Peach').appendTo($('ul')); // ul의 가장 마지막 위치에 붙이겠다 부모요소의 위치에 따라 append, append To로 나뉨
+    $('<li />').html('<b>Peach<b>').appendTo($('ul')); //html로 처리됨 .text는 텍스트가 들어감
+
+    // $('li:last').after($('<li>Grape</li>')); //li요소의 마지막에서 다음에 넣겠습니다.
+    //$('li:last').before($('<li>Grape</li>')); //해당요소의 앞에 넣겠습니다.
+    $('li:contains(Banana)').after($('<li>Grape</li>'));
+    $('<li>Grape2</li>').insertAfter($('li:first')); //li요소 첫번째 다음에다 넣겠다
+
+    $('div#show').wrap('<div class="row"></div>'); // div show를 div row를 만들어 감싸도록 하겠습니다.
+
+    let clone= $('li:first').clone(); // .clone 선택한 요소를 복사하여 새로운 요소를 생성
+    console.log(clone);
+    $('ul').append(clone); //복제한 clone을 ul의 하위요소로 가져옴
+  </script>
+</body>
+
+</html>

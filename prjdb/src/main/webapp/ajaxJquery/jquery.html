@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ajaxJquery/jquery.html</title>
+  <!--<script src="../js/jquery-3.7.1.min.js"></script>-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script>
+    //document.addEventListener('DOMContentLoaded', function (e) {
+      //돔컨텐트가 다 다운로드된 다음 로딩이란 이벤트가 발생하면 그때 함수 구문을 실행하십시오
+
+      $(document).ready(function(){ //document의 객체의 사용할 준비가 되면 그때 정의되어 있는 함수를 실행하십시오 
+        let ul = $('<ul />'); //document.creatElement('ul')과 같은것, 제이쿼리 객체생성
+        ul.append($('<li />').text('사과').attr('id', 'first')); //text함수를 써서 두태그사이에 값을 넣어주기, id는 first라고 하겠습니다. attr=setAttribute
+        ul.append($('<li id="second">바나나</li>'));
+        console.log(ul); //제이쿼리 모양그대로 가져온것
+        //console.log(ul[0]);//인덱스값으로 그리고싶다
+        //$('body').append(ul); //바디라는 요소를 찾아 하위 태그로 ul 생성하겠다, body 태그 파악 후 사용가능.
+        $('div#show').append(ul);  //div show의 하위요소로 ul 생성
+        let dom = document.createElement('ul');//자바스크립트 돔요소
+        console.log(dom);
+      })
+    //})
+
+  </script>
+</head>
+
+<body>
+    <div id="show"></div>
+</body>
+
+</html>

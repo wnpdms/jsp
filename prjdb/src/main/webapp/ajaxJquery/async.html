@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>async.html</title>
+</head>
+
+<body>
+	<script>
+		function syncFnc() {
+			let num = 10;
+			console.log(num);
+
+			num *= 2;
+			console.log(num)
+		}
+		syncFnc();
+		function asyncFnc() { // 비동기방식 먼저 끝나는거 대로 처리하겠다.
+			let friends = [];
+			setTimeout(function () {
+				friends.push({ name: "홍길동", phone: "1111" })
+				console.log(friends);
+			}, 3000); // setTimeout 3초 있다가 출력하겠다.
+			setTimeout(function () {
+				friends.push({ name: "김길동", phone: "2222" })
+				console.log(friends);
+			}, 2000); //2초
+			setTimeout(function () {
+				friends.push({ name: "박길동", phone: "3333" })
+				console.log(friends);
+			}, 1000); //1초. 비동기방식=> 코드의 적힌 순서대로 처리되지 않고 작업의 걸린시간이 적은 순서로 처리됨
+			console.log("end"+friends);
+		}
+		asyncFnc();
+
+	</script>
+</body>
+
+</html>
