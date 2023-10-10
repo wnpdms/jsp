@@ -55,7 +55,7 @@
 	<script src="js/book.js"></script>
 	<script type="text/javascript">
 		// Book 객체 생성
-		const bookObj = new Book();
+		const bookObj = new Book(); 
 		bookObj.showInfo();
 		const fields = ['bookCode', 'bookName', 'bookWriter', 'bookPub', 'bookPrice'];
 		
