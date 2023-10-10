@@ -19,11 +19,6 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookVO bookSelect(BookVO vo) {
-		return map.bookSelect(vo);
-	}
-
-	@Override
 	public int bookInsert(BookVO vo) {
 		return map.bookInsert(vo);
 	}

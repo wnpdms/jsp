@@ -5,11 +5,9 @@
 SELECT * FROM BOOK
 </select>
 
-<select id="bookSelect" resultType="co.yedam.prjdb.book.service.BookVO">
-SELECT * FROM BOOK WHERE BOOK_CODE = #{bookCode}
-</select>
-
 <insert id="bookInsert" parameterType="co.yedam.prjdb.book.service.BookVO">
+INSERT INTO BOOK(book_code, book_name, book_writer, book_pub, book_price)
+VALUES (#{bookCode}, #{bookName}, #{bookWriter}, #{bookPub}, #{bookPrice})
 </insert>
 
 <update id="bookUpdate" parameterType="co.yedam.prjdb.book.service.BookVO">
