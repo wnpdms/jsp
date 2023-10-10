@@ -33,7 +33,7 @@ public class AjaxBookList extends HttpServlet {
 		map.put("data", list);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
-		String json = objectMapper
+		String json = objectMapper 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
