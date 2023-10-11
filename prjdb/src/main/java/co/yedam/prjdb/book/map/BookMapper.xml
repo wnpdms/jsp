@@ -27,14 +27,6 @@ VALUES (#{bookCode}, #{bookName}, #{bookWriter}, #{bookPub}, #{bookPrice}, #{boo
 
 <delete id="bookDelete" parameterType="co.yedam.prjdb.book.service.BookVO">
 	DELETE FROM BOOK
-	WHERE BOOK_ID = #{bookId}
-	<choose>
-	<when test="code_list.size != 0">
-                AND BOOK_CODE IN 
-                <foreach collection="code_list" item="item" index="index" separator="," open="(" close=")">
-                    #{item}
-                </foreach>
-            </when>
-        </choose>
+	WHERE BOOK_ID = #{bookId}	
 </delete>
 </mapper>
